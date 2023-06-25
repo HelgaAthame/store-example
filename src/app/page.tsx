@@ -13,8 +13,7 @@ export default function Home() {
     <div
       className={font.className}
     >
-      <div className='text-6xl'>
-        Main
+      <div>
         <Cards/>
       </div>
     </div>

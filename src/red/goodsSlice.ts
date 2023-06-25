@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from './store'
-import { Card } from '~/types/Card'
+import { Good } from '~/types/Good'
 
 interface GoodsState {
-  goods: Card[]
-  favs: Card[],
+  goods: Good[]
+  favs: Good[],
 }
 
 const initialState: GoodsState = {
@@ -17,7 +17,7 @@ export const goodsSlice = createSlice({
   name: 'goods',
   initialState,
   reducers: {
-    addAllGoods: (state, action: PayloadAction<Card[]>) => {
+    addAllGoods: (state, action: PayloadAction<Good[]>) => {
       state.goods = action.payload;
     },
     addToFavs: (state, action: PayloadAction<number>) => {

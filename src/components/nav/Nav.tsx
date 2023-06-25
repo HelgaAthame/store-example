@@ -1,9 +1,16 @@
 import Link from "next/link";
+import { Button } from "~/components/ui/button";
 
 export const Nav = () => (
   <nav>
-    <Link href="/">Main</Link>
-    <Link href="/favs">Favorites</Link>
-    <Link href="/shopping-cart">Cart</Link>
+    <Button asChild variant="ghost">
+      <Link href="/">Main</Link>
+    </Button>
+    <Button asChild variant="ghost">
+      <Link href="/favs">Favorites</Link>
+    </Button>
+    <Button asChild variant="ghost">
+      <Link href="/shopping-cart">Cart</Link>
+    </Button>
   </nav>
 );

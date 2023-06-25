@@ -1,4 +1,4 @@
-export type Card = {
+export type Good = {
   id: number;
   title: string;
   price: number;

@@ -1,6 +1,16 @@
 import { useGetGoodsQuery } from '~/red/api';
 import { Loading } from '~/components/loading';
-import { type Card } from '~/types/Card';
+import { type Good } from '~/types/Good';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "~/components/ui/card"
+import { Button } from '../ui/button';
+
 
 export const Cards = () => {
   const { data, error, isLoading } = useGetGoodsQuery('');
@@ -12,16 +22,27 @@ export const Cards = () => {
         <Loading/>
       ) : data ? (
         <>
-          {data.map((item: Card) => (
-            <div key={item.id}>
-              <h3>{item.title}</h3>
-              <div>{item.description}</div>
+          {data.map((item: Good) => (
+            <Card key={item.id}>
+            <CardHeader>
+              <CardTitle>{item.title}</CardTitle>
+              <CardDescription>{item.category}</CardDescription>
+            </CardHeader>
+            <CardContent>
               <img src={item.image}/>
-              <div>{item.price}</div>
-              <div>{item.category}</div>
-              <div>{item.rating.rate}</div>
-              <div>{item.rating.count}</div>
-            </div>
+              <p>{item.description}</p>
+              <div>
+                <div>{item.rating.rate}</div>
+                <div>{item.rating.count}</div>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <p>{item.price}</p>
+              <Button>
+                ADD TO CART
+              </Button>
+            </CardFooter>
+          </Card>
           ))}
         </>
       ) : null}
