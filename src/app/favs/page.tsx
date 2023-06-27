@@ -1,10 +1,12 @@
 "use client";
 
+import { Favorites } from "~/components/favs";
+
 export default function Favs() {
   return (
     <div>
-      <div className='text-6xl'>
-        Favorites
+      <div>
+        <Favorites/>
       </div>
     </div>
   )

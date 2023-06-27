@@ -8,41 +8,120 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "~/components/ui/card"
-import { Button } from '../ui/button';
+} from "~/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "~/components/ui/dialog";
+import { Button } from '~/components/ui/button';
+import { Heart } from 'lucide-react';
+import { MouseEventHandler, useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '~/red/hooks';
+import { addAllGoods, addToCart, addToFavs, removeFromFavs } from '~/red/goodsSlice';
+import CustomError from '../Error/Error';
 
 
 export const Cards = () => {
   const { data, error, isLoading } = useGetGoodsQuery('');
+  const goods = useAppSelector((state) => state.goods.goods);
+  const cart = useAppSelector((state) => state.goods.cart);
+  const favs = useAppSelector((state) => state.goods.favs);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (data) {
+      dispatch(addAllGoods(data));
+    }
+  }, [data]);
+
+  const buttonClickHandler = (item: Good) => {
+    const itemInCart = cart.find((el: Good) => el.id === item.id);
+    if (itemInCart === undefined) {
+      dispatch(addToCart(item));
+    }
+  };
+
+  const heartClickHandler = (item: Good) => {
+    const itemInFavs = favs.find((el: Good) => el.id === item.id);
+    if (itemInFavs === undefined) {
+      dispatch(addToFavs(item));
+    } else {
+      dispatch(removeFromFavs(item.id));
+    }
+  };
+
+  const isItInFavs = (id: number): boolean => {
+    return Boolean(favs.find((item: Good) => item.id === id));
+  }
+  const isItInCart = (id: number): boolean => {
+    return Boolean(cart.find((item: Good) => item.id === id));
+  }
+
   return (
-    <div className="cards">
+    <div className="cards px-4 w-full flex flex-wrap justify-evenly gap-4">
       {error ? (
-        <>Here we are to put error component</>
+        <CustomError/>
       ) : isLoading ? (
         <Loading/>
-      ) : data ? (
+      ) : data && goods ? (
         <>
-          {data.map((item: Good) => (
-            <Card key={item.id}>
+          {goods.map((item: Good, index: number) => (
+            <Dialog key={index}>
+
+
+                <Card key={index} className="w-80 flex flex-col grow">
+                <DialogTrigger>
             <CardHeader>
               <CardTitle>{item.title}</CardTitle>
               <CardDescription>{item.category}</CardDescription>
             </CardHeader>
-            <CardContent>
-              <img src={item.image}/>
-              <p>{item.description}</p>
-              <div>
-                <div>{item.rating.rate}</div>
-                <div>{item.rating.count}</div>
-              </div>
+            <CardContent className="grow flex flex-col items-center justify-between">
+              <div className='h-32 text-ellipsis grow'><img src={item.image} className='h-full'/></div>
+              <div className='overflow-y-auto h-28 mt-4'>{item.description}</div>
             </CardContent>
-            <CardFooter>
-              <p>{item.price}</p>
-              <Button>
-                ADD TO CART
-              </Button>
+            </DialogTrigger>
+            <CardFooter className="flex flex-col grow">
+              <div className="flex justify-between items-center w-full">
+                <Heart size={24} color={isItInFavs(item.id) ? "red" : "black"} fill={isItInFavs(item.id) ? "red" : "transparent"} onClick={() => {heartClickHandler(item)}} className="hover:cursor-pointer"/>
+                <div className="font-semibold text-xl my-4">${item.price}</div>
+              </div>
+              <div className="w-full flex justify-end text-right">
+                <Button onClick={() => {buttonClickHandler(item)}} disabled={isItInCart(item.id)}>
+                  ADD TO CART
+                </Button>
+              </div>
             </CardFooter>
           </Card>
+
+
+                <DialogContent className="max-w-[90vw]">
+                  <DialogHeader>
+                    <DialogTitle>{item.title}</DialogTitle>
+                    <DialogDescription className="flex flex-col justify-center">
+                      <div className='text-ellipsis grow flex justify-center h-[40vh]'><img src={item.image} className='h-full'/></div>
+                      <div className='overflow-y-auto h-28 mt-4'>{item.description}</div>
+                    </DialogDescription>
+                  </DialogHeader>
+                  <DialogFooter className="flex flex-col">
+                    <div className="flex justify-between items-center w-full">
+                      <Heart size={24} color={isItInFavs(item.id) ? "red" : "black"} fill={isItInFavs(item.id) ? "red" : "transparent"} onClick={() => {heartClickHandler(item)}}/>
+                      <div className="font-semibold text-xl my-4">${item.price}</div>
+                    </div>
+                    <div className="w-full flex justify-end items-center text-right">
+                      <Button onClick={() => {buttonClickHandler(item)}} disabled={isItInCart(item.id)}>
+                        ADD TO CART
+                      </Button>
+                    </div>
+                  </DialogFooter>
+                </DialogContent>
+            </Dialog>
+
+
           ))}
         </>
       ) : null}
