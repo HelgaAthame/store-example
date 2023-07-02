@@ -9,7 +9,14 @@ const config = {
   reactStrictMode: true,
   experimental: { appDir: true },
   images: {
-      domains: ['fakestoreapi.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'fakestoreapi.com',
+        port: '',
+        pathname: '**',
+      },
+    ],
   },
   /**
    * If you have `experimental: { appDir: true }` set, then you must comment the below `i18n` config
