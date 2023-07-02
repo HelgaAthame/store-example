@@ -8,6 +8,9 @@ await import("./src/env.mjs");
 const config = {
   reactStrictMode: true,
   experimental: { appDir: true },
+  images: {
+      domains: ['fakestoreapi.com'],
+  },
   /**
    * If you have `experimental: { appDir: true }` set, then you must comment the below `i18n` config
    * out.
