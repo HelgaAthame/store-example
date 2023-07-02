@@ -20,14 +20,17 @@ import {
 } from "~/components/ui/dialog";
 import { Button } from '~/components/ui/button';
 import { Heart } from 'lucide-react';
-import { MouseEventHandler, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '~/red/hooks';
 import { addAllGoods, addToCart, addToFavs, removeFromFavs } from '~/red/goodsSlice';
 import CustomError from '../Error/Error';
-
+import Image from 'next/image';
 
 export const Cards = () => {
-  const { data, error, isLoading } = useGetGoodsQuery('');
+  const query = useGetGoodsQuery('');
+  const data: Good[] | undefined = query.data;
+  const error = query.error;
+  const isLoading: boolean = query.isLoading;
   const goods = useAppSelector((state) => state.goods.goods);
   const cart = useAppSelector((state) => state.goods.cart);
   const favs = useAppSelector((state) => state.goods.favs);
@@ -37,6 +40,7 @@ export const Cards = () => {
     if (data) {
       dispatch(addAllGoods(data));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const buttonClickHandler = (item: Good) => {
@@ -81,7 +85,7 @@ export const Cards = () => {
               <CardDescription>{item.category}</CardDescription>
             </CardHeader>
             <CardContent className="grow flex flex-col items-center justify-between">
-              <div className='h-32 text-ellipsis grow'><img src={item.image} className='h-full'/></div>
+              <div className='h-32 text-ellipsis grow'><Image src={item.image} className='h-full' alt="product image"/></div>
               <div className='overflow-y-auto h-28 mt-4'>{item.description}</div>
             </CardContent>
             </DialogTrigger>
@@ -103,7 +107,7 @@ export const Cards = () => {
                   <DialogHeader>
                     <DialogTitle>{item.title}</DialogTitle>
                     <DialogDescription className="flex flex-col justify-center">
-                      <div className='text-ellipsis grow flex justify-center h-[40vh]'><img src={item.image} className='h-full'/></div>
+                      <div className='text-ellipsis grow flex justify-center h-[40vh]'><Image src={item.image} className='h-full' alt="product image"/></div>
                       <div className='overflow-y-auto h-28 mt-4'>{item.description}</div>
                     </DialogDescription>
                   </DialogHeader>

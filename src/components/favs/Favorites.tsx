@@ -2,16 +2,12 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "~/components/ui/card"
-import { Button } from '~/components/ui/button';
-import { Heart } from 'lucide-react';
-import { useAppDispatch, useAppSelector } from '~/red/hooks';
-import { Good } from "~/types/Good";
-import { removeFromCart } from "~/red/goodsSlice";
-
+import { useAppSelector } from '~/red/hooks';
+import { type Good } from "~/types/Good";
+import Image from 'next/image';
 
 export const Favorites = () => {
   const favs = useAppSelector((state) => state.goods.favs);
@@ -24,7 +20,7 @@ export const Favorites = () => {
           {favs.map((item: Good, index: number) => (
             <Card key={index} className={`w-80 flex flex-col`}>
             <CardContent className="flex flex-row items-center justify-between gap-8">
-              <div className='h-80 text-ellipsis grow flex justify-center items-center pt-8'><img src={item.image} className='h-full'/></div>
+              <div className='h-80 text-ellipsis grow flex justify-center items-center pt-8'><Image src={item.image} className='h-full' alt="product image"/></div>
             </CardContent>
 
             <CardHeader>

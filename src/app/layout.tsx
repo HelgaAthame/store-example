@@ -1,5 +1,3 @@
-import { Suspense } from 'react';
-import { Loading } from '~/components/loading';
 import { Nav } from '~/components/nav';
 import { Logo } from '~/components/logo';
 import '~/styles/globals.css';

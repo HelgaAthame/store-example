@@ -1,8 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import type { RootState } from './store'
 import { Good } from '~/types/Good'
-import { Carter_One } from 'next/font/google'
 
 interface GoodsState {
   goods: Good[]

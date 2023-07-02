@@ -10,7 +10,7 @@ import { Button } from '~/components/ui/button';
 import { useAppDispatch, useAppSelector } from '~/red/hooks';
 import { Good } from "~/types/Good";
 import { removeFromCart } from "~/red/goodsSlice";
-
+import Image from 'next/image';
 
 export const Cart = () => {
   const cart = useAppSelector((state) => state.goods.cart);
@@ -31,7 +31,7 @@ export const Cart = () => {
             <Card key={index} className="w-full flex flex-row flex-wrap grow p-4 gap-4">
             <CardContent className="flex flex-row items-center justify-between gap-8">
               <div className="text-2xl font-semibold">{index + 1}</div>
-              <div className='h-32 text-ellipsis grow w-32 flex justify-center items-center'><img src={item.image} className='max-h-32'/></div>
+              <div className='h-32 text-ellipsis grow w-32 flex justify-center items-center'><Image src={item.image} className='max-h-32' alt="product image"/></div>
             </CardContent>
 
             <CardHeader className="grow w-[50vw]">
