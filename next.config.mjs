@@ -13,8 +13,6 @@ const config = {
       {
         protocol: 'https',
         hostname: 'fakestoreapi.com',
-        port: '',
-        pathname: '**',
       },
     ],
   },

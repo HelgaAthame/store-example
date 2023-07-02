@@ -38,6 +38,7 @@ export const Cards = () => {
 
   useEffect(() => {
     if (data) {
+      console.log(data);
       dispatch(addAllGoods(data));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -74,7 +75,7 @@ export const Cards = () => {
         <Loading/>
       ) : data && goods ? (
         <>
-          {goods.map((item: Good, index: number) => (
+          {goods.map((item: Good, index: number) => {console.log(item.image);return(
             <Dialog key={index}>
 
 
@@ -138,7 +139,7 @@ export const Cards = () => {
             </Dialog>
 
 
-          ))}
+          )})}
         </>
       ) : null}
     </div>
