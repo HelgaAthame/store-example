@@ -8,7 +8,7 @@ import {
 } from "~/components/ui/card"
 import { Button } from '~/components/ui/button';
 import { useAppDispatch, useAppSelector } from '~/red/hooks';
-import { Good } from "~/types/Good";
+import { type Good } from "~/types/Good";
 import { removeFromCart } from "~/red/goodsSlice";
 import Image from 'next/image';
 

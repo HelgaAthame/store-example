@@ -87,10 +87,12 @@ export const Cards = () => {
             </CardHeader>
             <CardContent className="grow flex flex-col items-center justify-between">
               <div className='h-32 text-ellipsis grow'>
-                <img
+                <Image
                   src={item.image}
                   className='h-full'
                   alt="product image"
+                  width={200}
+                  height={200}
                 />
               </div>
               <div className='overflow-y-auto h-28 mt-4'>{item.description}</div>
@@ -115,10 +117,12 @@ export const Cards = () => {
                     <DialogTitle>{item.title}</DialogTitle>
                     <DialogDescription className="flex flex-col justify-center">
                       <div className='text-ellipsis grow flex justify-center h-[40vh]'>
-                        <img
+                        <Image
                           src={item.image}
                           className='h-full'
                           alt="product image"
+                          width={200}
+                          height={200}
                         />
                       </div>
                       <div className='overflow-y-auto h-28 mt-4'>{item.description}</div>

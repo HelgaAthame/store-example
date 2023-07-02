@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { Good } from '~/types/Good'
+import { type Good } from '~/types/Good'
 
 interface GoodsState {
   goods: Good[]
