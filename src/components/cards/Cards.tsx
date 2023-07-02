@@ -24,7 +24,11 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '~/red/hooks';
 import { addAllGoods, addToCart, addToFavs, removeFromFavs } from '~/red/goodsSlice';
 import CustomError from '../Error/Error';
-import Image from 'next/image';
+import Image, { ImageLoader, ImageLoaderProps } from 'next/image';
+
+const imageLoader: ImageLoader = ({ src, width, quality }: ImageLoaderProps) => {
+  return `${src}?w=${width}&q=${quality || 75}`
+}
 
 export const Cards = () => {
   const query = useGetGoodsQuery('');
@@ -38,6 +42,7 @@ export const Cards = () => {
 
   useEffect(() => {
     if (data) {
+      console.log(data);
       dispatch(addAllGoods(data));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -85,7 +90,9 @@ export const Cards = () => {
               <CardDescription>{item.category}</CardDescription>
             </CardHeader>
             <CardContent className="grow flex flex-col items-center justify-between">
-              <div className='h-32 text-ellipsis grow'><Image src={item.image} className='h-full' alt="product image"/></div>
+              <div className='h-32 text-ellipsis grow'>
+                <Image loader={imageLoader} src={item.image} className='h-full' alt="product image"/>
+              </div>
               <div className='overflow-y-auto h-28 mt-4'>{item.description}</div>
             </CardContent>
             </DialogTrigger>
