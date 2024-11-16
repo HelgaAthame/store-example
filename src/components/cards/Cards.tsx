@@ -43,7 +43,6 @@ export const Cards = () => {
 
   useEffect(() => {
     if (data) {
-      console.log(data);
       dispatch(addAllGoods(data));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -79,33 +78,31 @@ export const Cards = () => {
       ) : isLoading ? (
         <Loading />
       ) : data && goods ? (
-        <>
+        <div className="3xl:grid-cols-5 4xl:grid-cols-6 grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
           {goods.map((item: Good, index: number) => {
-            console.log(item.image);
             return (
               <Dialog key={index}>
-                <Card key={index} className="flex w-80 grow flex-col">
-                  <DialogTrigger>
-                    <CardHeader>
+                <Card key={index} className="flex w-full grow flex-col">
+                  <DialogTrigger className="flex grow flex-col">
+                    <CardHeader className="flex w-full grow flex-col">
                       <CardTitle>{item.title}</CardTitle>
                       <CardDescription>{item.category}</CardDescription>
                     </CardHeader>
                     <CardContent className="flex grow flex-col items-center justify-between">
-                      <div className="h-32 grow text-ellipsis">
+                      <div className="relative h-32 w-full grow text-ellipsis">
                         <Image
                           src={item.image}
-                          className="h-full"
                           alt="product image"
-                          width={200}
-                          height={200}
+                          fill
+                          objectFit="contain"
                         />
                       </div>
-                      <div className="mt-4 h-28 overflow-y-auto">
+                      <div className="mt-4 line-clamp-3 break-words text-justify">
                         {item.description}
                       </div>
                     </CardContent>
                   </DialogTrigger>
-                  <CardFooter className="flex grow flex-col">
+                  <CardFooter className="flex flex-col">
                     <div className="flex w-full items-center justify-between">
                       <Heart
                         size={24}
@@ -180,7 +177,7 @@ export const Cards = () => {
               </Dialog>
             );
           })}
-        </>
+        </div>
       ) : null}
     </div>
   );
