@@ -1,4 +1,4 @@
-import { type Good } from "~/types/Good";
+
 import Image from "next/image";
 import {
   Card,

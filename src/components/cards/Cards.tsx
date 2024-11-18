@@ -1,6 +1,5 @@
 import { useGetGoodsQuery } from "~/red/api";
 import { Loading } from "~/components/loading";
-import { type Good } from "~/types/Good";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "~/red/hooks";
 import { addAllGoods } from "~/red/goodsSlice";

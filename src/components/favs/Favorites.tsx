@@ -1,5 +1,4 @@
 import { useAppDispatch, useAppSelector } from "~/red/hooks";
-import { type Good } from "~/types/Good";
 import { GoodEl } from "../goods/Good";
 import { setSelected } from "~/red/goodsSlice";
 import { Preview } from "../preview";

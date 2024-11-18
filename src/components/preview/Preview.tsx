@@ -1,5 +1,4 @@
 import { Heart } from "lucide-react";
-import { type Good } from "~/types/Good";
 import { Button } from "../ui/button";
 import {
   Card,

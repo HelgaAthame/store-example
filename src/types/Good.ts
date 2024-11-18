@@ -1,4 +1,4 @@
-export type Good = {
+type Good = {
   id: number;
   title: string;
   price: number;
@@ -8,5 +8,5 @@ export type Good = {
   rating: {
     rate: number;
     count: number;
-  }
-}
+  };
+};
