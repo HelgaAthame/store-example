@@ -1,9 +1,9 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { baseQueryWithReauth } from "~/red/queries/baseQueryWithReauth";
+import { baseQuery } from "~/red/queries/baseQuery";
 
 export const filesApi = createApi({
   reducerPath: "filesApi",
-  baseQuery: baseQueryWithReauth,
+  baseQuery: baseQuery,
   endpoints: (builder) => ({}),
 });
 

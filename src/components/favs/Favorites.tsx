@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "~/red/hooks";
-import { GoodEl } from "../goods/Good";
+import { Product } from "../products/Product";
 import { setSelected } from "~/red/goodsSlice";
 import { Preview } from "../preview";
 import { Fragment } from "react";
@@ -19,7 +19,7 @@ export const Favorites = () => {
             className={` gap-4 ${
               selected
                 ? "flex max-w-[20rem] flex-col"
-                : "3xl:grid-cols-5 4xl:grid-cols-6 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
+                : "grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-5 4xl:grid-cols-6"
             } w-full`}
           >
             {favs.map((item: Good, index: number) => (
@@ -33,7 +33,7 @@ export const Favorites = () => {
                   }
                 }}
               >
-                <GoodEl item={item} />
+                {/* <Product item={item} /> */}
               </div>
             ))}
           </div>

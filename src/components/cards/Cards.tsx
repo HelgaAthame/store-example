@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "~/red/hooks";
 import { addAllGoods } from "~/red/goodsSlice";
 import CustomError from "../Error/Error";
-import { GoodEl } from "../goods/Good";
+import { Product } from "../products/Product";
 
 export const Cards = () => {
   const query = useGetGoodsQuery("");
@@ -28,10 +28,10 @@ export const Cards = () => {
       ) : isLoading ? (
         <Loading />
       ) : data && goods ? (
-        <div className="3xl:grid-cols-5 4xl:grid-cols-6 grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-          {goods.map((item: Good, index: number) => {
-            return <GoodEl item={item} key={index} withModal />;
-          })}
+        <div className="grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-5 4xl:grid-cols-6">
+          {/* {goods.map((item: Good, index: number) => {
+            return <Product item={item} key={index} withModal />;
+          })} */}
         </div>
       ) : null}
     </div>

@@ -1,21 +1,19 @@
 "use client";
 
-import { Oxygen } from 'next/font/google';
-import { Cards } from '~/components/cards';
+import { Oxygen } from "next/font/google";
+import { Cards } from "~/components/cards";
 
 const font = Oxygen({
-  weight: '400',
-  subsets: ['latin', 'latin-ext'],
+  weight: "400",
+  subsets: ["latin", "latin-ext"],
 });
 
-export default function Products() {
+export default function ProductPage() {
   return (
-    <div
-      className={font.className}
-    >
+    <div className={font.className}>
       <div>
-        <Cards/>
+        <Cards />
       </div>
     </div>
-  )
+  );
 }

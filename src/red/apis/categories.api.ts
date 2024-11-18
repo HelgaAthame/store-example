@@ -1,10 +1,22 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { baseQueryWithReauth } from "~/red/queries/baseQueryWithReauth";
+import { baseQuery } from "~/red/queries/baseQuery";
 
 export const categoriesApi = createApi({
   reducerPath: "categoriesApi",
-  baseQuery: baseQueryWithReauth,
-  endpoints: (builder) => ({}),
+  baseQuery: baseQuery,
+  endpoints: (builder) => ({
+    getCategories: builder.mutation<string[], number | undefined>({
+      query: (limit) => {
+        return {
+          url: `/`,
+          method: "GET",
+          params: {
+            limit: limit ?? 100,
+          },
+        };
+      },
+    }),
+  }),
 });
 
-export const {} = categoriesApi;
+export const { useGetCategoriesMutation } = categoriesApi;

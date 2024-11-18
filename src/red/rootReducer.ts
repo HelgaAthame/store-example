@@ -1,6 +1,5 @@
 import { type AnyAction, combineReducers } from "@reduxjs/toolkit";
 import goodsReducer from "./goodsSlice";
-import { authApi } from "./apis/auth.api";
 import { categoriesApi } from "./apis/categories.api";
 import { filesApi } from "./apis/files.api";
 import { productApi } from "./apis/product.api";
@@ -8,7 +7,6 @@ import { usersApi } from "./apis/users.api";
 
 const appReducer = combineReducers({
   goods: goodsReducer,
-  [authApi.reducerPath]: authApi.reducer,
   [categoriesApi.reducerPath]: categoriesApi.reducer,
   [filesApi.reducerPath]: filesApi.reducer,
   [productApi.reducerPath]: productApi.reducer,

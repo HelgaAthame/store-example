@@ -1,19 +1,27 @@
-"use client";
-
 import { Oxygen } from "next/font/google";
-import { Theme } from "@radix-ui/themes";
+import { baseUrl } from "~/consts/baseUrl";
+import { HomeModule } from "~/modules/home/HomeModule";
 
 const font = Oxygen({
   weight: "400",
   subsets: ["latin", "latin-ext"],
 });
+// async function getCategories(): Promise<ICategory[]> {
+//   const res = await fetch(`${baseUrl}/categories`);
+//   if (!res.ok) {
+//     throw new Error("Failed to fetch categories");
+//   }
+//   return res.json();
+// }
 
-export default function Home() {
+export default async function Home() {
+  let res = await fetch(`${baseUrl}/categories`);
+  const categories: ICategory[] = await res.json();
+  res = await fetch(`${baseUrl}/products`);
+  const products: IProduct[] = await res.json();
   return (
     <div className={font.className}>
-      
-        <Theme appearance="dark">{/* <Cards/> */}</Theme>
-      
+      <HomeModule categories={categories} products={products} />
     </div>
   );
 }

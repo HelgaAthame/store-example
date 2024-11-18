@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import {
   Card,
@@ -23,51 +22,51 @@ import { useAppDispatch, useAppSelector } from "~/red/hooks";
 import { addToCart, addToFavs, removeFromFavs } from "~/red/goodsSlice";
 import { Fragment } from "react";
 interface Props {
-  item: Good;
+  item: IProduct;
   withModal?: boolean;
 }
-export const GoodEl = ({ item, withModal = false }: Props) => {
+export const Product = ({ item, withModal = false }: Props) => {
   const dispatch = useAppDispatch();
   const cart = useAppSelector((state) => state.goods.cart);
   const favs = useAppSelector((state) => state.goods.favs);
 
-  const buttonClickHandler = (item: Good) => {
-    const itemInCart = cart.find((el: Good) => el.id === item.id);
-    if (itemInCart === undefined) {
-      dispatch(addToCart(item));
-    }
-  };
+  // const buttonClickHandler = (item: IProduct) => {
+  //   const itemInCart = cart.find((el: IProduct) => el.id === item.id);
+  //   if (itemInCart === undefined) {
+  //     dispatch(addToCart(item));
+  //   }
+  // };
 
-  const heartClickHandler = (item: Good) => {
-    const itemInFavs = favs.find((el: Good) => el.id === item.id);
-    if (itemInFavs === undefined) {
-      dispatch(addToFavs(item));
-    } else {
-      dispatch(removeFromFavs(item.id));
-    }
-  };
+  // const heartClickHandler = (item: IProduct) => {
+  //   const itemInFavs = favs.find((el: IProduct) => el.id === item.id);
+  //   if (itemInFavs === undefined) {
+  //     dispatch(addToFavs(item));
+  //   } else {
+  //     dispatch(removeFromFavs(item.id));
+  //   }
+  // };
 
-  const isItInFavs = (id: number): boolean => {
-    return Boolean(favs.find((item: Good) => item.id === id));
-  };
-  const isItInCart = (id: number): boolean => {
-    return Boolean(cart.find((item: Good) => item.id === id));
-  };
+  // const isItInFavs = (id: number): boolean => {
+  //   return Boolean(favs.find((item: IProduct) => item.id === id));
+  // };
+  // const isItInCart = (id: number): boolean => {
+  //   return Boolean(cart.find((item: IProduct) => item.id === id));
+  // };
 
   const children = (
     <Fragment>
       <CardHeader className="flex w-full grow flex-col">
         <CardTitle>{item.title}</CardTitle>
-        <CardDescription>{item.category}</CardDescription>
+        <CardDescription>{item.category.name}</CardDescription>
       </CardHeader>
       <CardContent className="flex grow flex-col items-center justify-between">
         <div className="relative h-32 w-full grow text-ellipsis">
-          <Image
-            src={item.image}
+          {/* <Image
+            src={item.images[0] as string}
             alt="product image"
             fill
             objectFit="contain"
-          />
+          /> */}
         </div>
         <div className="mt-4 line-clamp-3 break-words text-justify">
           {item.description}
@@ -90,21 +89,21 @@ export const GoodEl = ({ item, withModal = false }: Props) => {
           <div className="flex w-full items-center justify-between">
             <Heart
               size={24}
-              color={isItInFavs(item.id) ? "red" : "black"}
-              fill={isItInFavs(item.id) ? "red" : "transparent"}
-              onClick={() => {
-                heartClickHandler(item);
-              }}
+              color={/*isItInFavs(item.id) ? "red" : */ "black"}
+              fill={/*isItInFavs(item.id) ? "red" : */ "transparent"}
+              // onClick={() => {
+              //   heartClickHandler(item);
+              // }}
               className="hover:cursor-pointer"
             />
             <div className="my-4 text-xl font-semibold">${item.price}</div>
           </div>
           <div className="flex w-full justify-end text-right">
             <Button
-              onClick={() => {
-                buttonClickHandler(item);
-              }}
-              disabled={isItInCart(item.id)}
+            // onClick={() => {
+            //   buttonClickHandler(item);
+            // }}
+            // disabled={isItInCart(item.id)}
             >
               ADD TO CART
             </Button>
@@ -117,13 +116,13 @@ export const GoodEl = ({ item, withModal = false }: Props) => {
           <DialogTitle>{item.title}</DialogTitle>
           <DialogDescription className="flex flex-col justify-center">
             <div className="flex h-[40vh] grow justify-center text-ellipsis">
-              <Image
-                src={item.image}
+              {/* <Image
+                src={item.images[0] as string}
                 className="h-full"
                 alt="product image"
                 width={200}
                 height={200}
-              />
+              /> */}
             </div>
             <div className="mt-4 h-28 overflow-y-auto">{item.description}</div>
           </DialogDescription>
@@ -132,20 +131,20 @@ export const GoodEl = ({ item, withModal = false }: Props) => {
           <div className="flex w-full items-center justify-between">
             <Heart
               size={24}
-              color={isItInFavs(item.id) ? "red" : "black"}
-              fill={isItInFavs(item.id) ? "red" : "transparent"}
-              onClick={() => {
-                heartClickHandler(item);
-              }}
+              color={/*isItInFavs(item.id) ? "red" : */ "black"}
+              fill={/*isItInFavs(item.id) ? "red" : */ "transparent"}
+              // onClick={() => {
+              //   heartClickHandler(item);
+              // }}
             />
             <div className="my-4 text-xl font-semibold">${item.price}</div>
           </div>
           <div className="flex w-full items-center justify-end text-right">
             <Button
-              onClick={() => {
-                buttonClickHandler(item);
-              }}
-              disabled={isItInCart(item.id)}
+            // onClick={() => {
+            //   buttonClickHandler(item);
+            // }}
+            // disabled={isItInCart(item.id)}
             >
               ADD TO CART
             </Button>
