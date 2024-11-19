@@ -20,27 +20,27 @@ const config = {
     ],
   },
   // Дополнительно можно использовать rewrites для проксирования API-запросов
-  async rewrites() {
-    return [
-      {
-        source: "/api/:path*", // Локальный путь
-        destination: "https://fakestoreapi.com/:path*", // Проксирование внешнего API
-      },
-    ];
-  },
-  async headers() {
-    return [
-      {
-        source: "/api/:path*", // Только локальные маршруты
-        headers: [
-          {
-            key: "Access-Control-Allow-Origin",
-            value: "*", // Позволяет запросы со всех доменов (осторожно!)
-          },
-        ],
-      },
-    ];
-  },
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: "/api/:path*", // Локальный путь
+  //       destination: "https://fakestoreapi.com/:path*", // Проксирование внешнего API
+  //     },
+  //   ];
+  // },
+  // async headers() {
+  //   return [
+  //     {
+  //       source: "/api/:path*", // Только локальные маршруты
+  //       headers: [
+  //         {
+  //           key: "Access-Control-Allow-Origin",
+  //           value: "*", // Позволяет запросы со всех доменов (осторожно!)
+  //         },
+  //       ],
+  //     },
+  //   ];
+  // },
 };
 
 export default config;
