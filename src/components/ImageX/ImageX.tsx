@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Image, { type StaticImageData } from "next/image";
-import { string } from "zod";
 
 type ProductImageProps = {
   src: string | StaticImageData;
@@ -29,6 +28,7 @@ export default function ImageX({
       src={imageSrc}
       alt={alt}
       fill={fill}
+      className="w-full rounded-sm"
       style={{ objectFit: objectFit }}
       onError={() => setImageSrc(placeholder)}
       // Устанавливаем плейсхолдер в случае ошибки

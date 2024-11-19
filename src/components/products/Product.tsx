@@ -1,4 +1,3 @@
-import Image from "next/image";
 import imagePlaceholder from "../../../public/placeholder-image.webp";
 import {
   Card,
@@ -18,22 +17,31 @@ import {
   DialogTrigger,
 } from "~/components/ui/dialog";
 import { Button } from "~/components/ui/button";
-import { Heart } from "lucide-react";
+import { Heart, ShoppingCart } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "~/red/hooks";
-import { addToCart, addToFavs, removeFromFavs } from "~/red/globalSlice";
+import Link from "next/link";
+import {
+  addToCart,
+  addToFavs,
+  removeFromCart,
+  removeFromFavs,
+} from "~/red/globalSlice";
 import { Fragment } from "react";
 import ImageX from "../ImageX/ImageX";
+import { usePathname } from "next/navigation";
 interface Props {
   item: IProduct;
   withModal?: boolean;
 }
-export const Product = ({ item, withModal = false }: Props) => {
+export const Product = ({ item, withModal = true }: Props) => {
   const dispatch = useAppDispatch();
   const { cart, favs } = useAppSelector((state) => state.global);
+  const pathname = usePathname();
 
   const buttonClickHandler = (item: IProduct) => {
-    const itemInCart = cart.find((el: IProduct) => el.id === item.id);
-    if (itemInCart === undefined) {
+    if (isItInCart(item.id)) {
+      dispatch(removeFromCart(item.id));
+    } else {
       dispatch(addToCart(item));
     }
   };
@@ -61,7 +69,7 @@ export const Product = ({ item, withModal = false }: Props) => {
         <CardDescription>{item.category.name}</CardDescription>
       </CardHeader>
       <CardContent className="flex grow flex-col items-center justify-between">
-        <div className="relative h-32 w-full grow text-ellipsis">
+        <div className="relative h-64 w-full grow text-ellipsis">
           <ImageX
             src={item.images[0] ?? imagePlaceholder}
             alt="product image"
@@ -81,7 +89,7 @@ export const Product = ({ item, withModal = false }: Props) => {
     <Dialog>
       <Card className="flex w-full grow flex-col">
         {withModal ? (
-          <DialogTrigger className="hidden grow flex-col sm:flex">
+          <DialogTrigger className="flex grow flex-col">
             {children}
           </DialogTrigger>
         ) : (
@@ -89,56 +97,98 @@ export const Product = ({ item, withModal = false }: Props) => {
         )}
         <CardFooter className="flex flex-col">
           <div className="flex w-full items-center justify-between">
-            <Heart
-              size={24}
-              color={isItInFavs(item.id) ? "red" : "black"}
-              fill={isItInFavs(item.id) ? "red" : "transparent"}
-              // onClick={() => {
-              //   heartClickHandler(item);
-              // }}
-              className="hover:cursor-pointer"
-            />
+            <div
+              className="group relative flex items-center justify-center"
+              onClick={() => heartClickHandler(item)}
+            >
+              <span
+                className={`absolute inset-0 -translate-y-[2px] scale-0 rounded-full transition duration-300
+                  ${isItInFavs(item.id) ? "bg-red-100/50" : "bg-gray-200/50"} 
+                  group-hover:scale-150 group-active:scale-110`}
+                aria-hidden="true"
+              ></span>
+              <Heart
+                size={24}
+                className={`transition-transform duration-300 
+        ${
+          isItInFavs(item.id)
+            ? "fill-red-500 stroke-red-500"
+            : "fill-none stroke-black"
+        }
+        group-hover:scale-110 group-active:scale-90`}
+              />
+            </div>
             <div className="my-4 text-xl font-semibold">${item.price}</div>
           </div>
-          <div className="flex w-full justify-end text-right">
+          <div className="flex w-full items-center justify-between text-right">
+            {isItInCart(item.id) && !pathname.includes("cart") ? (
+              <Link href={"/shopping-cart"}>
+                <div className="group relative flex items-center justify-center">
+                  <span
+                    className={`absolute inset-0 -translate-y-[2px] scale-0 rounded-full bg-gray-200/50 transition
+                   duration-300 group-hover:scale-150 group-active:scale-110`}
+                    aria-hidden="true"
+                  ></span>
+                  <ShoppingCart
+                    size={24}
+                    className={`fill-none stroke-black 
+                   transition-transform duration-300 group-hover:scale-110 group-active:scale-90`}
+                  />
+                </div>
+              </Link>
+            ) : (
+              <div></div>
+            )}
             <Button
               onClick={() => {
                 buttonClickHandler(item);
               }}
-              disabled={isItInCart(item.id)}
             >
-              ADD TO CART
+              {isItInCart(item.id) ? "REMOVE FROM CART" : "ADD TO CART"}
             </Button>
           </div>
         </CardFooter>
       </Card>
-
-      <DialogContent className="max-w-[90vw]">
+      <DialogContent className="w-[90vw] max-w-[50rem]">
         <DialogHeader>
           <DialogTitle>{item.title}</DialogTitle>
-          <DialogDescription className="flex flex-col justify-center">
-            <div className="flex h-[40vh] grow justify-center text-ellipsis">
-              <ImageX
-                src={item.images[0] ?? imagePlaceholder}
-                alt="product image"
-                fill
-                objectFit="contain"
-                placeholder={imagePlaceholder}
+          <DialogDescription>{item.category.name}</DialogDescription>
+        </DialogHeader>
+        <div className="flex flex-col justify-center">
+          <div className="relative flex h-[80vw] max-h-[45rem] w-full grow justify-center text-ellipsis">
+            <ImageX
+              src={item.images[0] ?? imagePlaceholder}
+              alt="product image"
+              fill
+              objectFit="contain"
+              placeholder={imagePlaceholder}
+            />
+          </div>
+          <div className="mt-4 ">{item.description}</div>
+        </div>
+        <DialogFooter className="flex flex-col">
+          <div className="flex h-fit w-full items-center justify-between">
+            <div
+              className="group relative flex items-center justify-center"
+              onClick={() => heartClickHandler(item)}
+            >
+              <span
+                className={`absolute inset-0 -translate-y-[2px] scale-0 rounded-full transition duration-300
+                  ${isItInFavs(item.id) ? "bg-red-100/50" : "bg-gray-200/50"} 
+                  group-hover:scale-150 group-active:scale-110`}
+                aria-hidden="true"
+              ></span>
+              <Heart
+                size={24}
+                className={`transition-transform duration-300 
+        ${
+          isItInFavs(item.id)
+            ? "fill-red-500 stroke-red-500"
+            : "fill-none stroke-black"
+        }
+        group-hover:scale-110 group-active:scale-90`}
               />
             </div>
-            <div className="mt-4 h-28 overflow-y-auto">{item.description}</div>
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter className="flex flex-col">
-          <div className="flex w-full items-center justify-between">
-            <Heart
-              size={24}
-              color={isItInFavs(item.id) ? "red" : "black"}
-              fill={isItInFavs(item.id) ? "red" : "transparent"}
-              onClick={() => {
-                heartClickHandler(item);
-              }}
-            />
             <div className="my-4 text-xl font-semibold">${item.price}</div>
           </div>
           <div className="flex w-full items-center justify-end text-right">
@@ -146,9 +196,8 @@ export const Product = ({ item, withModal = false }: Props) => {
               onClick={() => {
                 buttonClickHandler(item);
               }}
-              disabled={isItInCart(item.id)}
             >
-              ADD TO CART
+              {isItInCart(item.id) ? "REMOVE FROM CART" : "ADD TO CART"}
             </Button>
           </div>
         </DialogFooter>

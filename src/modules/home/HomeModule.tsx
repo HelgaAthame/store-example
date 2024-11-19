@@ -23,9 +23,9 @@ export const HomeModule = ({ categories, products }: Props) => {
 
   return (
     <Fragment>
-      <div className="flex h-max w-full gap-4 overflow-visible bg-slate-100 dark:bg-slate-900">
+      <div className=" flex h-max w-full gap-4 overflow-visible bg-slate-100 dark:bg-slate-900">
         <Carousel
-          items={categories.map((category, index) => (
+          items={categories.map((category) => (
             <div
               key={category.id}
               onClick={() => {

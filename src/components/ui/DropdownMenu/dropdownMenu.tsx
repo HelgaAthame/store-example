@@ -40,19 +40,13 @@ export const Menu = () => {
 
       <Portal>
         <Content
-          className="DropdownMenuContent shadow-custom-light dark:shadow-custom-dark"
+          className="DropdownMenuContent bg-white shadow-custom-light dark:bg-black dark:shadow-custom-dark"
           sideOffset={5}
+          onClick={() => {
+            setIsOpen(false);
+          }}
         >
           <Nav />
-          {/* <Item className="DropdownMenuItem">
-            New Tab <div className="RightSlot">⌘+T</div>
-          </Item>
-          <Item className="DropdownMenuItem">
-            New Window <div className="RightSlot">⌘+N</div>
-          </Item>
-          <Item className="DropdownMenuItem" disabled>
-            New Private Window <div className="RightSlot">⇧+⌘+N</div>
-          </Item> */}
           <Arrow className="fill-white dark:fill-black" />
         </Content>
       </Portal>
