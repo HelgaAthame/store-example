@@ -28,6 +28,19 @@ const config = {
       },
     ];
   },
+  async headers() {
+    return [
+      {
+        source: "/api/:path*", // Только локальные маршруты
+        headers: [
+          {
+            key: "Access-Control-Allow-Origin",
+            value: "*", // Позволяет запросы со всех доменов (осторожно!)
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default config;
