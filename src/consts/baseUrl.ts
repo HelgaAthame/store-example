@@ -1,1 +1,1 @@
-export const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+export const baseUrl = "https://api.escuelajs.co/api/v1";
