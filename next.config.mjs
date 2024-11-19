@@ -6,7 +6,7 @@
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
-  // output: "export",
+  output: 'standalone',
   // basePath: "/store-example",
   images: {
     remotePatterns: [
