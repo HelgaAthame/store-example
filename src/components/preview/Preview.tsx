@@ -1,3 +1,4 @@
+import imagePlaceholder from "../../../public/placeholder-image.webp";
 import { Heart } from "lucide-react";
 import { Button } from "../ui/button";
 import {
@@ -7,22 +8,22 @@ import {
   CardDescription,
   CardFooter,
 } from "../ui/card";
-import Image from "next/image";
-import { addToCart, addToFavs, removeFromFavs } from "~/red/goodsSlice";
+import { addToCart, addToFavs, removeFromFavs } from "~/red/globalSlice";
 import { useAppDispatch, useAppSelector } from "~/red/hooks";
+import ImageX from "../ImageX/ImageX";
 
-export const Preview = ({ item }: { item: Good }) => {
+export const Preview = ({ item }: { item: IProduct }) => {
   const dispatch = useAppDispatch();
-  const { favs, cart } = useAppSelector((state) => state.goods);
-  const buttonClickHandler = (item: Good) => {
-    const itemInCart = cart.find((el: Good) => el.id === item.id);
+  const { favs, cart } = useAppSelector((state) => state.global);
+  const buttonClickHandler = (item: IProduct) => {
+    const itemInCart = cart.find((el: IProduct) => el.id === item.id);
     if (itemInCart === undefined) {
       dispatch(addToCart(item));
     }
   };
 
-  const heartClickHandler = (item: Good) => {
-    const itemInFavs = favs.find((el: Good) => el.id === item.id);
+  const heartClickHandler = (item: IProduct) => {
+    const itemInFavs = favs.find((el: IProduct) => el.id === item.id);
     if (itemInFavs === undefined) {
       dispatch(addToFavs(item));
     } else {
@@ -31,10 +32,10 @@ export const Preview = ({ item }: { item: Good }) => {
   };
 
   const isItInFavs = (id: number): boolean => {
-    return Boolean(favs.find((item: Good) => item.id === id));
+    return Boolean(favs.find((item: IProduct) => item.id === id));
   };
   const isItInCart = (id: number): boolean => {
-    return Boolean(cart.find((item: Good) => item.id === id));
+    return Boolean(cart.find((item: IProduct) => item.id === id));
   };
   return (
     <Card className="sticky top-4 hidden max-h-[90vh] w-full max-w-full grow flex-col sm:flex">
@@ -42,11 +43,12 @@ export const Preview = ({ item }: { item: Good }) => {
         <CardTitle>{item.title}</CardTitle>
         <CardDescription className="flex flex-col justify-center">
           <div className="relative h-[40vh] w-full grow text-ellipsis">
-            <Image
-              src={item.image}
+            <ImageX
+              src={item.images[0] ?? imagePlaceholder}
               alt="product image"
               fill
               objectFit="contain"
+              placeholder={imagePlaceholder}
             />
           </div>
           <div className="mt-4 h-28 overflow-y-auto">{item.description}</div>

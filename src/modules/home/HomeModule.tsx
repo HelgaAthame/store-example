@@ -3,7 +3,7 @@
 import { Fragment, useEffect, useState } from "react";
 import { Carousel } from "~/components/Carousel";
 import { Products } from "~/components/products/Products";
-import { getProducts } from "./getPropducts";
+import { getProducts } from "../../actions/getPropducts";
 
 interface Props {
   categories: ICategory[];
@@ -17,7 +17,7 @@ export const HomeModule = ({ categories, products }: Props) => {
   useEffect(() => {
     if (curCategory)
       void getProducts(curCategory).then((res) => {
-        setCurPropducts(() => res);
+        if (res) setCurPropducts(res);
       });
   }, [curCategory]);
 

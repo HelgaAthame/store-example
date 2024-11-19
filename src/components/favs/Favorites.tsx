@@ -1,11 +1,9 @@
 import { useAppDispatch, useAppSelector } from "~/red/hooks";
-import { Product } from "../products/Product";
-import { setSelected } from "~/red/goodsSlice";
+import { setSelected } from "~/red/globalSlice";
 import { Preview } from "../preview";
-import { Fragment } from "react";
 
 export const Favorites = () => {
-  const { favs, selected } = useAppSelector((state) => state.goods);
+  const { favs, selected } = useAppSelector((state) => state.global);
   const dispatch = useAppDispatch();
   return (
     <div className="flex w-full flex-wrap justify-evenly gap-4 px-4">
@@ -22,7 +20,7 @@ export const Favorites = () => {
                 : "grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-5 4xl:grid-cols-6"
             } w-full`}
           >
-            {favs.map((item: Good, index: number) => (
+            {favs.map((item: IProduct, index: number) => (
               <div
                 key={index}
                 onClick={() => {

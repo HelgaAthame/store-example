@@ -1,40 +1,40 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-interface GoodsState {
-  goods: Good[];
-  favs: Good[];
-  cart: Good[];
-  selected: null | Good;
+interface IAppSlice {
+  products: IProduct[];
+  favs: IProduct[];
+  cart: IProduct[];
+  selected: null | IProduct;
 }
 
-const initialState: GoodsState = {
+const initialState: IAppSlice = {
   favs: [],
-  goods: [],
+  products: [],
   cart: [],
   selected: null,
 };
 
-export const goodsSlice = createSlice({
-  name: "goods",
+export const productsSlice = createSlice({
+  name: "products",
   initialState,
   reducers: {
-    addAllGoods: (state, action: PayloadAction<Good[]>) => {
-      state.goods = action.payload;
+    addAllIProducts: (state, action: PayloadAction<IProduct[]>) => {
+      state.products = action.payload;
     },
-    addToFavs: (state, action: PayloadAction<Good>) => {
+    addToFavs: (state, action: PayloadAction<IProduct>) => {
       state.favs.push(action.payload);
     },
     removeFromFavs: (state, action: PayloadAction<number>) => {
       state.favs = state.favs.filter((item) => item.id !== action.payload);
     },
-    addToCart: (state, action: PayloadAction<Good>) => {
+    addToCart: (state, action: PayloadAction<IProduct>) => {
       state.cart.push(action.payload);
     },
     removeFromCart: (state, action: PayloadAction<number>) => {
       state.cart = state.cart.filter((item) => item.id !== action.payload);
     },
-    setSelected: (state, action: PayloadAction<Good | null>) => {
+    setSelected: (state, action: PayloadAction<IProduct | null>) => {
       state.selected = action.payload;
     },
   },
@@ -43,10 +43,10 @@ export const goodsSlice = createSlice({
 export const {
   addToFavs,
   removeFromFavs,
-  addAllGoods,
+  addAllIProducts,
   addToCart,
   removeFromCart,
   setSelected,
-} = goodsSlice.actions;
+} = productsSlice.actions;
 
-export default goodsSlice.reducer;
+export default productsSlice.reducer;
