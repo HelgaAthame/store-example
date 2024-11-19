@@ -7,7 +7,6 @@ export async function getCategories(): Promise<ICategory[] | null> {
 
   try {
     const res = await fetch(`${baseUrl}/categories`);
-    console.log(baseUrl);
 
     // Ensure the response is valid JSON and matches the expected type
     if (!res.ok) {

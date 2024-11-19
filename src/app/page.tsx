@@ -10,9 +10,7 @@ const font = Oxygen({
 
 export default async function Home() {
   const categories = (await getCategories()) ?? [];
-  console.log(categories);
   const products = (await getProducts()) ?? [];
-  console.log(products);
   return (
     <div className={font.className}>
       <HomeModule categories={categories} products={products} />

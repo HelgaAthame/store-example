@@ -113,7 +113,7 @@ export const Product = ({ item, withModal = true }: Props) => {
         ${
           isItInFavs(item.id)
             ? "fill-red-500 stroke-red-500"
-            : "fill-none stroke-black"
+            : "fill-none stroke-black dark:stroke-white"
         }
         group-hover:scale-110 group-active:scale-90`}
               />
@@ -131,8 +131,8 @@ export const Product = ({ item, withModal = true }: Props) => {
                   ></span>
                   <ShoppingCart
                     size={24}
-                    className={`fill-none stroke-black 
-                   transition-transform duration-300 group-hover:scale-110 group-active:scale-90`}
+                    className={`fill-none stroke-black transition-transform
+                   duration-300 group-hover:scale-110 group-active:scale-90 dark:stroke-white`}
                   />
                 </div>
               </Link>
@@ -149,13 +149,13 @@ export const Product = ({ item, withModal = true }: Props) => {
           </div>
         </CardFooter>
       </Card>
-      <DialogContent className="w-[90vw] max-w-[50rem]">
+      <DialogContent className="max-w-[90vw]">
         <DialogHeader>
           <DialogTitle>{item.title}</DialogTitle>
           <DialogDescription>{item.category.name}</DialogDescription>
         </DialogHeader>
-        <div className="flex flex-col justify-center">
-          <div className="relative flex h-[80vw] max-h-[45rem] w-full grow justify-center text-ellipsis">
+        <div className="flex flex-col justify-center gap-8 md:flex-row">
+          <div className="relative flex h-[80vw] max-h-[50rem] grow justify-center text-ellipsis md:h-[40vw]">
             <ImageX
               src={item.images[0] ?? imagePlaceholder}
               alt="product image"
@@ -164,7 +164,7 @@ export const Product = ({ item, withModal = true }: Props) => {
               placeholder={imagePlaceholder}
             />
           </div>
-          <div className="mt-4 ">{item.description}</div>
+          <div className="w-full text-justify md:w-1/2">{item.description}</div>
         </div>
         <DialogFooter className="flex flex-col">
           <div className="flex h-fit w-full items-center justify-between">
@@ -184,14 +184,32 @@ export const Product = ({ item, withModal = true }: Props) => {
         ${
           isItInFavs(item.id)
             ? "fill-red-500 stroke-red-500"
-            : "fill-none stroke-black"
+            : "fill-none stroke-black dark:stroke-white"
         }
         group-hover:scale-110 group-active:scale-90`}
               />
             </div>
             <div className="my-4 text-xl font-semibold">${item.price}</div>
           </div>
-          <div className="flex w-full items-center justify-end text-right">
+          <div className="flex w-full items-center justify-between text-right">
+            {isItInCart(item.id) && !pathname.includes("cart") ? (
+              <Link href={"/shopping-cart"}>
+                <div className="group relative flex items-center justify-end">
+                  <span
+                    className={`absolute inset-0 -translate-y-[2px] scale-0 rounded-full bg-gray-200/50 transition
+                   duration-300 group-hover:scale-150 group-active:scale-110`}
+                    aria-hidden="true"
+                  ></span>
+                  <ShoppingCart
+                    size={24}
+                    className={`fill-none stroke-black transition-transform
+                   duration-300 group-hover:scale-110 group-active:scale-90 dark:stroke-white`}
+                  />
+                </div>
+              </Link>
+            ) : (
+              <div></div>
+            )}
             <Button
               onClick={() => {
                 buttonClickHandler(item);
