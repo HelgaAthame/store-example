@@ -15,42 +15,50 @@ export const HomeModule = ({ categories, products }: Props) => {
   const [curProducts, setCurPropducts] = useState<IProduct[]>(products);
 
   useEffect(() => {
-    if (curCategory)
-      void getProducts(curCategory).then((res) => {
-        if (res) setCurPropducts(res);
-      });
+    void getProducts(curCategory ?? undefined).then((res) => {
+      if (res) setCurPropducts(res);
+    });
   }, [curCategory]);
+
+  const element = (
+    categoryId: number,
+    isSelected: boolean,
+    categoryName: string
+  ) => (
+    <div
+      key={categoryId}
+      onClick={() => {
+        setCurCategory(categoryId);
+      }}
+      className={`flex origin-center transform items-center justify-center overflow-visible 
+    truncate break-all rounded-lg py-4 text-lg font-semibold shadow-lg transition-all 
+    duration-300 ease-in-out 
+    ${
+      isSelected
+        ? "bg-gradient-to-r from-indigo-800 via-purple-800 to-pink-800 text-slate-200 shadow-xl"
+        : "bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 text-white hover:rotate-2 hover:scale-105 hover:opacity-95"
+    }
+    dark:${
+      isSelected
+        ? "bg-gradient-to-r dark:from-indigo-200 dark:via-purple-200 dark:to-pink-200 dark:text-slate-800 dark:shadow-xl"
+        : "bg-gradient-to-r dark:from-indigo-500 dark:via-purple-500 dark:to-pink-500 dark:text-black dark:hover:rotate-2 dark:hover:scale-105 dark:hover:opacity-95"
+    }`}
+    >
+      {categoryName}
+    </div>
+  );
 
   return (
     <Fragment>
       <div className=" flex h-max w-full gap-4 overflow-visible bg-slate-100 dark:bg-slate-900">
         <Carousel
-          items={categories.map((category) => {
-            const isSelected = curCategory === category.id;
-            return (
-              <div
-                key={category.id}
-                onClick={() => {
-                  setCurCategory(category.id);
-                }}
-                className={`flex origin-center transform items-center justify-center overflow-visible 
-                truncate break-all rounded-lg py-4 text-lg font-semibold shadow-lg transition-all 
-                duration-300 ease-in-out 
-                ${
-                  isSelected
-                    ? "bg-gradient-to-r from-indigo-800 via-purple-800 to-pink-800 text-slate-200 shadow-xl"
-                    : "bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 text-white hover:rotate-2 hover:scale-105 hover:opacity-95"
-                }
-                dark:${
-                  isSelected
-                    ? "bg-gradient-to-r dark:from-indigo-200 dark:via-purple-200 dark:to-pink-200 dark:text-slate-800 dark:shadow-xl"
-                    : "bg-gradient-to-r dark:from-indigo-500 dark:via-purple-500 dark:to-pink-500 dark:text-black dark:hover:rotate-2 dark:hover:scale-105 dark:hover:opacity-95"
-                }`}
-              >
-                {category.name}
-              </div>
-            );
-          })}
+          items={[
+            element(0, curCategory === 0, "All categories"),
+            ...categories.map((category) => {
+              const isSelected = curCategory === category.id;
+              return element(category.id, isSelected, category.name);
+            }),
+          ]}
         />
       </div>
 

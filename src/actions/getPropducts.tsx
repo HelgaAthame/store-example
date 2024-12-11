@@ -16,7 +16,6 @@ export async function getProducts(
       return null;
     }
 
-    // Parse the JSON response with proper type checking
     const products: unknown = await res.json();
 
     if (!Array.isArray(products)) {
@@ -24,7 +23,6 @@ export async function getProducts(
       return null;
     }
 
-    // Validate and filter products
     const validProducts = products.filter((product): product is IProduct =>
       isValidProduct(product)
     );
@@ -36,7 +34,6 @@ export async function getProducts(
   }
 }
 
-// Helper function to validate if an object matches the IProduct interface
 function isValidProduct(product: unknown): product is IProduct {
   if (
     typeof product === "object" &&
@@ -56,7 +53,6 @@ function isValidProduct(product: unknown): product is IProduct {
   return false;
 }
 
-// Helper function to validate if an object matches the ICategory interface
 function isValidCategory(category: unknown): category is ICategory {
   return (
     typeof category === "object" &&
