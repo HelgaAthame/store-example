@@ -6,12 +6,12 @@ import { Products } from "~/components/products/Products";
 import { getProducts } from "../../actions/getPropducts";
 
 interface Props {
-  categories: ICategory[];
+  categories: string[];
   products: IProduct[];
 }
 
 export const HomeModule = ({ categories, products }: Props) => {
-  const [curCategory, setCurCategory] = useState<number | null>(null);
+  const [curCategory, setCurCategory] = useState<string | null>(null);
   const [curProducts, setCurPropducts] = useState<IProduct[]>(products);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ export const HomeModule = ({ categories, products }: Props) => {
   }, [curCategory]);
 
   const element = (
-    categoryId: number,
+    categoryId: string | null,
     isSelected: boolean,
     categoryName: string
   ) => (
@@ -31,8 +31,8 @@ export const HomeModule = ({ categories, products }: Props) => {
         setCurCategory(categoryId);
       }}
       className={`flex origin-center transform items-center justify-center overflow-visible 
-    truncate break-all rounded-lg py-4 text-lg font-semibold shadow-lg transition-all 
-    duration-300 ease-in-out 
+    truncate break-all rounded-lg py-4 text-lg font-semibold capitalize shadow-lg 
+    transition-all duration-300 ease-in-out
     ${
       isSelected
         ? "bg-gradient-to-r from-indigo-800 via-purple-800 to-pink-800 text-slate-200 shadow-xl"
@@ -53,10 +53,10 @@ export const HomeModule = ({ categories, products }: Props) => {
       <div className=" flex h-max w-full gap-4 overflow-visible bg-slate-100 dark:bg-slate-900">
         <Carousel
           items={[
-            element(0, curCategory === 0, "All categories"),
+            element(null, curCategory === null, "All categories"),
             ...categories.map((category) => {
-              const isSelected = curCategory === category.id;
-              return element(category.id, isSelected, category.name);
+              const isSelected = curCategory === category;
+              return element(category, isSelected, category);
             }),
           ]}
         />

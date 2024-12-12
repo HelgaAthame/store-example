@@ -3,10 +3,10 @@
 import { baseUrl } from "~/consts/baseUrl";
 
 export async function getProducts(
-  curCategory?: number
+  curCategory?: string
 ): Promise<IProduct[] | null> {
   if (!baseUrl) return null;
-  const category = curCategory ? `/?categoryId=${curCategory}` : "";
+  const category = curCategory ? `/category/${curCategory}` : "";
 
   try {
     const res = await fetch(`${baseUrl}/products${category}`);
@@ -16,7 +16,10 @@ export async function getProducts(
       return null;
     }
 
-    const products: unknown = await res.json();
+    const productsRes = (await res.json()) as unknown as {
+      products: IProduct[];
+    };
+    const products = productsRes.products;
 
     if (!Array.isArray(products)) {
       console.error("Invalid products data received");
@@ -43,24 +46,9 @@ function isValidProduct(product: unknown): product is IProduct {
     typeof (product as IProduct).price === "number" &&
     typeof (product as IProduct).description === "string" &&
     Array.isArray((product as IProduct).images) &&
-    (product as IProduct).images.every((img) => typeof img === "string") &&
-    typeof (product as IProduct).creationAt === "string" &&
-    typeof (product as IProduct).updatedAt === "string" &&
-    isValidCategory((product as IProduct).category)
+    (product as IProduct).images.every((img) => typeof img === "string")
   ) {
     return true;
   }
   return false;
-}
-
-function isValidCategory(category: unknown): category is ICategory {
-  return (
-    typeof category === "object" &&
-    category !== null &&
-    typeof (category as ICategory).id === "number" &&
-    typeof (category as ICategory).name === "string" &&
-    typeof (category as ICategory).image === "string" &&
-    typeof (category as ICategory).creationAt === "string" &&
-    typeof (category as ICategory).updatedAt === "string"
-  );
 }

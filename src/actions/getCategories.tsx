@@ -2,11 +2,11 @@
 
 import { baseUrl } from "~/consts/baseUrl";
 
-export async function getCategories(): Promise<ICategory[] | null> {
+export async function getCategories(): Promise<string[] | null> {
   if (!baseUrl) return null;
 
   try {
-    const res = await fetch(`${baseUrl}/categories`);
+    const res = await fetch(`${baseUrl}/products/category-list`);
 
     // Ensure the response is valid JSON and matches the expected type
     if (!res.ok) {
@@ -18,7 +18,7 @@ export async function getCategories(): Promise<ICategory[] | null> {
 
     // Type guard to ensure `categories` is of type `ICategory[]`
     if (Array.isArray(categories)) {
-      return categories as ICategory[];
+      return categories as string[];
     } else {
       console.error("Invalid category data received");
       return null;
