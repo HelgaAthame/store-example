@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image, { type StaticImageData } from "next/image";
 
 type ProductImageProps = {
@@ -22,6 +22,10 @@ export default function ImageX({
     stringSrc.startsWith("http://") ||
     stringSrc.startsWith("https://");
   const [imageSrc, setImageSrc] = useState(isCorrectSrc ? src : placeholder);
+
+  useEffect(() => {
+    setImageSrc(src);
+  }, [src]);
 
   return (
     <Image

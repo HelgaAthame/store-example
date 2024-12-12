@@ -26,7 +26,7 @@ import {
   removeFromCart,
   removeFromFavs,
 } from "~/red/globalSlice";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import ImageX from "../ImageX/ImageX";
 import { usePathname } from "next/navigation";
 interface Props {
@@ -34,6 +34,7 @@ interface Props {
   withModal?: boolean;
 }
 export const Product = ({ item, withModal = true }: Props) => {
+  const [mainImgSrc, setMainImageSrc] = useState<string>(item.images[0] ?? "");
   const dispatch = useAppDispatch();
   const { cart, favs } = useAppSelector((state) => state.global);
   const pathname = usePathname();
@@ -66,7 +67,7 @@ export const Product = ({ item, withModal = true }: Props) => {
     <Fragment>
       <CardHeader className="flex w-full grow flex-col">
         <CardTitle>{item.title}</CardTitle>
-        <CardDescription>{item.category.name}</CardDescription>
+        <CardDescription>{item.category}</CardDescription>
       </CardHeader>
       <CardContent className="flex grow flex-col items-center justify-between">
         <div className="relative h-64 w-full grow text-ellipsis">
@@ -152,19 +153,71 @@ export const Product = ({ item, withModal = true }: Props) => {
       <DialogContent className="max-w-[90vw]">
         <DialogHeader>
           <DialogTitle>{item.title}</DialogTitle>
-          <DialogDescription>{item.category.name}</DialogDescription>
+          <DialogDescription>{item.category}</DialogDescription>
         </DialogHeader>
         <div className="flex flex-col justify-center gap-8 md:flex-row">
-          <div className="relative flex h-[80vw] max-h-[50rem] grow justify-center text-ellipsis md:h-[40vw]">
+          <div className="relative flex h-[80vw] max-h-[50rem] grow justify-start text-ellipsis md:h-[40vw]">
             <ImageX
-              src={item.images[0] ?? imagePlaceholder}
+              src={mainImgSrc ?? imagePlaceholder}
               alt="product image"
               fill
               objectFit="contain"
               placeholder={imagePlaceholder}
             />
+            <div className="flex max-h-[50rem] w-[7vw] flex-col gap-2 overflow-y-auto md:w-[10vw]">
+              {item.images.map((img, ind) => (
+                <div
+                  className="relative h-[7vw] max-w-[7vw] cursor-pointer rounded-md border border-slate-200 shadow backdrop-blur-sm duration-300 hover:border-slate-400"
+                  key={ind}
+                  onClick={() => {
+                    setMainImageSrc(img);
+                  }}
+                >
+                  <ImageX
+                    src={img ?? imagePlaceholder}
+                    alt="product image"
+                    fill
+                    objectFit="contain"
+                    placeholder={imagePlaceholder}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="w-full text-justify md:w-1/2">{item.description}</div>
+          <div className="flex w-full flex-col gap-3 text-justify md:w-1/2">
+            <div>{item.description}</div>
+            <div></div>
+            <div>
+              <strong>Raiting:</strong> {item.rating}
+            </div>
+            <div>
+              <strong>Stock:</strong> {item.stock}
+            </div>
+            <div>
+              <strong>Brand:</strong> {item.brand}
+            </div>
+            <div>
+              <strong>Width:</strong> {item.dimensions.width}
+            </div>
+            <div>
+              <strong>Height:</strong> {item.dimensions.height}
+            </div>
+            <div>
+              <strong>Depth:</strong> {item.dimensions.depth}
+            </div>
+            <div>
+              <strong>Warranty:</strong> {item.warrantyInformation}
+            </div>
+            <div>
+              <strong>Return policy:</strong> {item.returnPolicy}
+            </div>
+            <div>
+              <strong>Shipping:</strong> {item.shippingInformation}
+            </div>
+            <div>
+              <strong>Avialability:</strong> {item.availabilityStatus}
+            </div>
+          </div>
         </div>
         <DialogFooter className="flex flex-col">
           <div className="flex h-fit w-full items-center justify-between">
