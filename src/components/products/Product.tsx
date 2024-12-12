@@ -165,23 +165,24 @@ export const Product = ({ item, withModal = true }: Props) => {
               placeholder={imagePlaceholder}
             />
             <div className="flex max-h-[50rem] w-[7vw] flex-col gap-2 overflow-y-auto md:w-[10vw]">
-              {item.images.map((img, ind) => (
-                <div
-                  className="relative h-[7vw] max-w-[7vw] cursor-pointer rounded-md border border-slate-200 shadow backdrop-blur-sm duration-300 hover:border-slate-400"
-                  key={ind}
-                  onClick={() => {
-                    setMainImageSrc(img);
-                  }}
-                >
-                  <ImageX
-                    src={img ?? imagePlaceholder}
-                    alt="product image"
-                    fill
-                    objectFit="contain"
-                    placeholder={imagePlaceholder}
-                  />
-                </div>
-              ))}
+              {item.images.length > 1 &&
+                item.images.map((img, ind) => (
+                  <div
+                    className="relative h-[7vw] max-w-[7vw] cursor-pointer rounded-md border border-slate-200 shadow backdrop-blur-sm duration-300 hover:border-slate-400"
+                    key={ind}
+                    onClick={() => {
+                      setMainImageSrc(img);
+                    }}
+                  >
+                    <ImageX
+                      src={img ?? imagePlaceholder}
+                      alt="product image"
+                      fill
+                      objectFit="contain"
+                      placeholder={imagePlaceholder}
+                    />
+                  </div>
+                ))}
             </div>
           </div>
           <div className="flex w-full flex-col gap-3 text-justify md:w-1/2">
