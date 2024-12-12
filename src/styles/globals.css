@@ -3,6 +3,29 @@
 @tailwind utilities;
 
 @layer base {
+  /* Стили для скроллов */
+  *::-webkit-scrollbar {
+    width: 5px; /* Ширина вертикального скролла */
+    height: 5x; /* Высота горизонтального скролла */
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--muted-foreground)); /* Цвет ползунка */
+    border-radius: var(--radius); /* Скругленные края */
+    border: 0px solid hsl(var(--background)); /* Промежуток между ползунком и треком */
+  }
+
+  *::-webkit-scrollbar-track {
+    background-color: hsl(var(--muted)); /* Цвет трека */
+    border-radius: var(--radius); /* Скругленные края */
+  }
+
+  /* Поддержка для Firefox */
+  * {
+    scrollbar-width: thin; /* Тонкий скролл */
+    scrollbar-color: hsl(var(--muted-foreground)) hsl(var(--muted)); /* Ползунок и трек */
+  }
+
   :root {
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;

@@ -43,11 +43,12 @@ const DialogContent = React.forwardRef<
       ref={ref}
       className={cn(
         "fixed left-[50%] top-[50%] z-50 max-h-[90vh] w-full max-w-lg translate-x-[-50%] translate-y-[-50%] overflow-hidden rounded-md border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out sm:rounded-lg md:w-full",
+        "w-full max-w-[90vw] overflow-y-auto md:max-w-[85vw] lg:max-w-[80vw] xl:max-w-[75vw]",
         className
       )}
       {...props}
     >
-      <div className="max-h-[80vh] overflow-y-auto">
+      <div className="">
         {" "}
         {/* Добавлен блок с прокруткой */}
         {children}
