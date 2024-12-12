@@ -219,7 +219,7 @@ export const Product = ({ item, withModal = true }: Props) => {
             </div>
           </div>
         </div>
-        <DialogFooter className="flex flex-col">
+        <DialogFooter className="flex flex-col p-2">
           <div className="flex h-fit w-full items-center justify-between">
             <div
               className="group relative flex items-center justify-center"
